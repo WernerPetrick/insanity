@@ -1,0 +1,16 @@
+<h2><%= @post['title'] %></h2>
+
+<% if @post['body'].present? %>
+  <% @post['body'].each do |block| %>
+    <% if block['_type'] == 'block' %>
+      <p><%= block['children'].map { |child| child['text'] }.join(' ') %></p>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% if @post['image'].present? && @post['image']['asset'].present? %>
+  <%= image_ref = @post['image']['asset']['_ref'] %>
+  
+  <%= image_url = "https://cdn.sanity.io/images/#{ENV['SANITY_PROJECT_ID']}/#{image_ref}.png" %>
+  <%= image_tag image_url, alt: @post['title'] %>
+<% end %>
