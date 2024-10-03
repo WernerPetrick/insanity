@@ -234,8 +234,6 @@ GEM
       io-console (~> 0.5)
     rexml (3.3.7)
     rubyzip (2.3.2)
-    sanity-ruby (0.6.0)
-      activemodel
     selenium-webdriver (4.25.0)
       base64 (~> 0.2)
       logger (~> 1.4)
@@ -309,7 +307,6 @@ DEPENDENCIES
   jbuilder
   puma (>= 5.0)
   rails (~> 7.1.4)
-  sanity-ruby
   selenium-webdriver
   sprockets-rails
   sqlite3 (>= 1.4)

@@ -68,4 +68,3 @@ group :test do
 end
 
 gem 'http'
-gem 'sanity-ruby'

@@ -1,22 +1,28 @@
-<% if @posts.present? %>
-  <% @posts.each do |post| %>
-    <h2><%= post['title'] %></h2>
-    <% if post['body'].present? %>
-      <% post['body'].each do |block| %>
-        <% if block['_type'] == 'block' %>
-          <p><%= block['children'].map { |child| child['text'] }.join(' ') %></p>
+<%= render 'navbar' %>
+
+<div class="header reddit">
+  <h1>Exploring the <span class="playwrite">INSANE</span> world we live in</h1>
+</div>
+
+<section class="posts">
+  <% if @posts.present? %>
+    <% @posts.each do |post| %>
+      <div class="card-container">
+        <div class="card-img">
+          <% if post['image'].present? && post['image']['asset'].present? %>
+            <% image_ref = post['image']['asset']['_ref'] %>
+            <% cleaned_ref = image_ref.gsub(/^image-/, '').gsub(/-jpg$/, '') %>
+            <% image_url = "https://cdn.sanity.io/images/#{ENV['SANITY_PROJECT_ID']}/production/#{cleaned_ref}.jpg" %>
+            <%= image_tag image_url, alt: post['title'], class: "thumbnail" %>
         <% end %>
-      <% end %>
+        </div>
+        <div class="card-text ">
+          <h2><%= post['title'] %></h2>
+        </div>
+      </div>
+      
     <% end %>
-    
-    <% if post['image'].present? && post['image']['asset'].present? %>
-      <% image_ref = post['image']['asset']['_ref'] %>
-      <% cleaned_ref = image_ref.gsub(/^image-/, '').gsub(/-png$/, '') %>
-      <% image_url = "https://cdn.sanity.io/images/#{ENV['SANITY_PROJECT_ID']}/production/#{cleaned_ref}.png" %>
-      <%= image_tag image_url, alt: post['title'], class:"thumbnail" %>
-    <% end %>
-    
+  <% else %>
+    <p>No posts available.</p>
   <% end %>
-<% else %>
-  <p>No posts available.</p>
-<% end %>
+</section>

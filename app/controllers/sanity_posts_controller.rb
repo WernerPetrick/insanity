@@ -27,6 +27,7 @@ class SanityPostsController < ApplicationController
     body: [
       {
         _type: 'block',
+        _key: SecureRandom.uuid,
         children: [
           {
             _type: 'span',
@@ -50,6 +51,6 @@ class SanityPostsController < ApplicationController
   private
 
   def post_params_from_request
-    params.require(:post).permit(:body, :title)
+    params.require(:post).permit(:body, :title, :slug)
   end
 end
