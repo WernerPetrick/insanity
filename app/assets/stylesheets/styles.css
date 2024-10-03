@@ -42,6 +42,9 @@ body{
 
 .posts{
   padding: 0 120px;
+  display: flex;
+  width: 90%;
+  gap: 20px;
 }
 
 menu ul{
@@ -57,4 +60,18 @@ menu ul li {
   border-radius: 12px;
   padding: 4px 8px;
   list-style-type: none;
+}
+
+menu ul li a {
+  text-decoration: none;
+  color: #fff5f5
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
 }

@@ -1,4 +1,5 @@
 class SanityPostsController < ApplicationController
+  
   def index
     query = '*[_type == "post"]{ _id, title, body, image }'
     response = SanityPostsHelper.fetch(query)
@@ -7,9 +8,18 @@ class SanityPostsController < ApplicationController
   
   def show 
     post_id = params[:id]
-    query = '*[_type == "post" && _id == $post_id]{ _id, title, body, image }'
+    query = "*[_type == 'post' && _id == $post_id]{ _id, title, body, image }"
+  
+    Rails.logger.debug "Sanity Query: #{query}, Post ID: #{post_id}"
     response = SanityPostsHelper.fetch(query, { post_id: post_id })
-    @post = response['result'].first if response
+    Rails.logger.debug "Sanity Response: #{response}"
+  
+    if response && response['result'].present? && response['result'].any?
+      @post = response['result'].first
+    else
+      @post = nil
+      Rails.logger.warn "No post found for ID: #{post_id}"
+    end
   end
   
   def new
