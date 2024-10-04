@@ -41,4 +41,34 @@ module SanityPostsHelper
     Rails.logger.error("Sanity API error: #{e.message}")
     nil
   end
+  
+  def self.patch_document(id, patch_operations)
+    mutation = {
+      mutations: [
+        {
+          patch: {
+            id: id,
+            set: patch_operations[:set],
+            unset: patch_operations[:unset],
+            inc: patch_operations[:inc],
+            dec: patch_operations[:dec],
+          }
+        }
+      ]
+    }
+
+    response = HTTP.auth("Bearer #{SANITY_TOKEN}")
+                   .post(SANITY_API_URL, json: mutation)
+
+    if response.status.success?
+      JSON.parse(response.body.to_s)
+    else
+      Rails.logger.error("Failed to patch document: #{response.body.to_s}")
+      nil
+    end
+  rescue HTTP::Error => e
+    Rails.logger.error("Sanity API error: #{e.message}")
+    nil
+  end
+  
 end
